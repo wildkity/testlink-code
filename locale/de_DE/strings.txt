@@ -278,6 +278,7 @@ $TLS_test_status_not_run = "nicht getestet";
 $TLS_test_status_blocked = "Blockiert";
 $TLS_test_status_failed = "Fehlgeschlagen";
 $TLS_test_status_passed = "OK";
+$TLS_test_status_hold = "Halten";
 $TLS_test_status_not_available = "Nicht verfügbar";
 $TLS_test_status_unknown = "Unbekannt";
 
@@ -1063,6 +1064,7 @@ $TLS_trep_comp_perc = "Erledigt [%]";
 $TLS_trep_failed = $TLS_test_status_failed;
 $TLS_trep_not_run = $TLS_test_status_not_run;
 $TLS_trep_passed = $TLS_test_status_passed;
+$TLS_trep_hold = $TLS_test_status_hold;
 $TLS_trep_total = "Gesamt";
 
 
@@ -1886,6 +1888,7 @@ $TLS_last_status_blocked = $TLS_test_status_blocked;
 $TLS_last_status_failed = $TLS_test_status_failed;
 $TLS_last_status_not_run = $TLS_test_status_not_run;
 $TLS_last_status_passed = $TLS_test_status_passed;
+$TLS_last_status_hold = $TLS_test_status_hold;
 $TLS_select_builds_header = "Build(s) wählen";
 $TLS_select_platforms_header = "Plattform(en) wählen";
 $TLS_select_components_header = "Testsuite(n) wählen";
@@ -1923,6 +1926,7 @@ $TLS_th_total_cases = "#Testfälle";
 $TLS_th_total_fail = "#" . $TLS_test_status_failed;
 $TLS_th_total_not_run = "#" . $TLS_test_status_not_run;
 $TLS_th_total_pass = "#" . $TLS_test_status_passed;
+$TLS_th_total_hold = "#" . $TLS_test_status_hold;
 $TLS_th_start_time = "Startzeit";
 $TLS_th_end_time = "Endezeit";
 $TLS_th_executor = "Ausgeführt von";

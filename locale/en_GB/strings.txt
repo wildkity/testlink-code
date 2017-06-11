@@ -330,6 +330,7 @@ $TLS_test_status_not_run = "Not Run";
 $TLS_test_status_blocked = "Blocked";
 $TLS_test_status_failed = "Failed";
 $TLS_test_status_passed = "Passed";
+$TLS_test_status_hold = "Hold";
 $TLS_test_status_not_available = "Not Available";
 $TLS_test_status_unknown = "Unknown";
 
@@ -389,6 +390,7 @@ $TLS_tcase_relation_help = "(if you are linking to a test on same test project, 
 $TLS_quick_passed = "Click to set to passed";
 $TLS_quick_failed = "Click to set to failed";
 $TLS_quick_blocked = "Click to set to blocked";
+$TLS_quick_hold = "Click to set to hold";
 
 $TLS_onchange_save = "Value will be automatically saved when changed";
 $TLS_CSRF_attack = "Cross-Site Request Forgery attack!";
@@ -1188,6 +1190,7 @@ $TLS_trep_comp_perc = "Completed [%]";
 $TLS_trep_failed = $TLS_test_status_failed;
 $TLS_trep_not_run = $TLS_test_status_not_run;
 $TLS_trep_passed = $TLS_test_status_passed;
+$TLS_trep_hold = $TLS_test_status_hold;
 $TLS_trep_total = "Total";
 
 
@@ -2060,6 +2063,7 @@ $TLS_last_status_blocked = $TLS_test_status_blocked;
 $TLS_last_status_failed = $TLS_test_status_failed;
 $TLS_last_status_not_run = $TLS_test_status_not_run;
 $TLS_last_status_passed = $TLS_test_status_passed;
+$TLS_last_status_hold = $TLS_test_status_hold;
 $TLS_select_builds_header = "Select Builds";
 $TLS_select_platforms_header = "Select Platforms";
 $TLS_select_components_header = "Top level Test Suites";
@@ -2097,6 +2101,7 @@ $TLS_th_total_cases = "#Test Cases";
 $TLS_th_total_fail = "#" . $TLS_test_status_failed;
 $TLS_th_total_not_run = "#" . $TLS_test_status_not_run;
 $TLS_th_total_pass = "#" . $TLS_test_status_passed;
+$TLS_th_total_hold = "#" . $TLS_test_status_hold;
 $TLS_th_start_time = "Start Time";
 $TLS_th_end_time = "End Time";
 $TLS_th_executor = "Executed By";
@@ -2595,6 +2600,7 @@ $TLS_number_executions = "# Test Cases Run";
 $TLS_number_failed = "# " . $TLS_test_status_failed;
 $TLS_number_not_run = "# " . $TLS_test_status_not_run;
 $TLS_number_passed = "# " . $TLS_test_status_passed;
+$TLS_number_hold = "# " . $TLS_test_status_hold;
 $TLS_owner = "Tester";
 $TLS_owner_header = $TLS_owner. " =";
 $TLS_runby = "Run By";
@@ -4072,10 +4078,12 @@ $TLS_issueTracker_connection_ko = 'Test Connection KO';
 $TLS_click_passed = "Click to set to passed";
 $TLS_click_failed = "Click to set to failed";
 $TLS_click_blocked = "Click to set to blocked";
+$TLS_click_hold = "Click to set to hold";
 
 $TLS_click_passed_next = "Click to set to passed and move to next";
 $TLS_click_failed_next = "Click to set to failed and move to next";
 $TLS_click_blocked_next = "Click to set to blocked and move to next";
+$TLS_click_hold_next = "Click to set to hold and move to next";
 
 $TLS_send_spreadsheet_by_email = 'Send Spreadsheet by email to myself';
 $TLS_send_by_email_to_me = 'Send by email to myself';

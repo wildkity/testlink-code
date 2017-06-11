@@ -330,6 +330,7 @@ $TLS_test_status_not_run = "尚未执行";
 $TLS_test_status_blocked = "锁定";
 $TLS_test_status_failed = "失败";
 $TLS_test_status_passed = "通过";
+$TLS_test_status_hold = "保持";
 $TLS_test_status_not_available = "无效";
 $TLS_test_status_unknown    = "未知";
 
@@ -2097,6 +2098,7 @@ $TLS_th_total_cases = "#测试用例";
 $TLS_th_total_fail = "#" . $TLS_test_status_failed;
 $TLS_th_total_not_run = "#" . $TLS_test_status_not_run;
 $TLS_th_total_pass = "#" . $TLS_test_status_passed;
+$TLS_th_total_hold = "#" . $TLS_test_status_hold;
 $TLS_th_start_time = "开始时间";
 $TLS_th_end_time = "结束时间";
 $TLS_th_executor = "执行人";

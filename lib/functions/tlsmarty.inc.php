@@ -450,9 +450,11 @@ class TLSmarty extends Smarty
                    'test_status_passed' => $imgLoc . 'test_status_passed.png',
                    'test_status_failed' => $imgLoc . 'test_status_failed.png',
                    'test_status_blocked' => $imgLoc . 'test_status_blocked.png',
+                   'test_status_hold' => $imgLoc . 'test_status_hold.png',
                    'test_status_passed_next' => $imgLoc . 'test_status_passed_next.png',
                    'test_status_failed_next' => $imgLoc . 'test_status_failed_next.png',
-                   'test_status_blocked_next' => $imgLoc . 'test_status_blocked_next.png');
+                   'test_status_blocked_next' => $imgLoc . 'test_status_blocked_next.png',
+                   'test_status_hold_next' => $imgLoc . 'test_status_hold_next.png');
                      
     return $dummy;
 	}

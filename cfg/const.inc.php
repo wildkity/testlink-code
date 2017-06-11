@@ -369,7 +369,7 @@ $att_model_m2->show_upload_column = true;
  * The code is used in DB to store results (not GUI).  
  * Do not do localisation here, i.e do not change "passed" by your national language.
  */ 
-$tlCfg->results['status_code'] = array('failed' => 'f','blocked' => 'b','passed' => 'p','not_run' => 'n',
+$tlCfg->results['status_code'] = array('failed' => 'f','blocked' => 'b','passed' => 'p','hold' => 'h','not_run' => 'n',
                                        'not_available' => 'x','unknown' => 'u','all' => 'a'); 
 
 
@@ -390,6 +390,7 @@ $tlCfg->results['status_label'] = array('not_run' => 'test_status_not_run',
                                         'passed' => 'test_status_passed',
                                         'failed' => 'test_status_failed',
                                         'blocked'=> 'test_status_blocked',
+                                        'hold' => 'test_status_hold',
                                         'all' => 'test_status_all_status',
                                         'not_available' => 'test_status_not_available',
                                         'unknown' => 'test_status_unknown');
@@ -414,7 +415,8 @@ $tlCfg->results['status_label'] = array('not_run' => 'test_status_not_run',
 $tlCfg->results['status_label_for_exec_ui'] = array('not_run' => 'test_status_not_run',
                                                     'passed'  => 'test_status_passed',
                                                     'failed'  => 'test_status_failed',
-                                                    'blocked' => 'test_status_blocked');
+                                                    'blocked' => 'test_status_blocked',
+                                                    'hold' => 'test_status_hold');
 
 
 $tlCfg->results['status_icons_for_exec_ui'] = 
@@ -423,7 +425,9 @@ $tlCfg->results['status_icons_for_exec_ui'] =
         'failed' => array('img' => 'test_status_failed',
                           'title' => 'click_failed'),
         'blocked' => array('img' => 'test_status_blocked',
-                           'title' => 'click_blocked'));
+                           'title' => 'click_blocked'),
+        'hold' => array('img' => 'test_status_hold',
+                           'title' => 'click_hold'));
 
 $tlCfg->results['status_icons_for_exec_next_ui'] = 
   array('passed' => array('img' => 'test_status_passed_next',
@@ -431,7 +435,9 @@ $tlCfg->results['status_icons_for_exec_next_ui'] =
         'failed' => array('img' => 'test_status_failed_next',
                           'title' => 'click_failed_next'),
         'blocked' => array('img' => 'test_status_blocked_next',
-                           'title' => 'click_blocked_next'));
+                           'title' => 'click_blocked_next'),
+        'hold' => array('img' => 'test_status_hold_next',
+                           'title' => 'click_hold_next'));
 
 
 /** 

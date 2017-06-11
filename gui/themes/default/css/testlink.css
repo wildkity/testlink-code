@@ -620,7 +620,7 @@ div.not_run {
 
 
 /* ***** execution tree coloring ************************* */
-span.light_passed, span.light_failed, span.light_blocked,
+span.light_passed, span.light_failed, span.light_blocked, span.light_hold,
 span.light_not_run, span.light_not_available, span.light_unknown
 {
 	color:				black;
@@ -640,12 +640,16 @@ span.light_blocked {
 	background: 		#D5D5EE; /* blue */
 }
 
+span.light_hold {
+	background: 		#FFFFD5; /* yellow */
+}
+
 span.light_not_run {
 	background: 		#E8E8E8; /* grey */
 }
 
 span.light_not_available {
-	background: 		#F8EEDD; /* yellow */
+	background: 		#F8EEDD; /* orange */
 }
 
 span.light_unknown {
@@ -666,6 +670,11 @@ span.light_unknown {
 .blocked {
 	color: 			white;
 	background:		#00008B; /* darkblue */
+}
+
+.hold {
+	color: 			black;
+	background:		#FCFC1B; /* darkyellow */
 }
 
 .not_run {
@@ -696,6 +705,11 @@ span.light_unknown {
 
 .blocked_text {
 	color:		#00008B; /* darkblue */
+  font-weight: bold;
+}
+
+.hold_text {
+	color:		#646464; /* darkgrey */
   font-weight: bold;
 }
 

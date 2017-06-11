@@ -129,6 +129,7 @@ $TLS_test_status_not_run = "Non eseguito";
 $TLS_test_status_blocked = "Bloccato";
 $TLS_test_status_failed = "Fallito";
 $TLS_test_status_passed = "Corretto";
+$TLS_test_status_hold = "Tenere";
 $TLS_test_status_not_available = "Not Available";
 $TLS_test_status_unknown 	= "Unknown";
 
