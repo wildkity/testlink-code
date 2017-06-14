@@ -17,7 +17,10 @@ Testlink: smarty template - Edit own account
              your_password_is_external,user_api_key,btn_apikey_generate,empty_email_address,
              audit_last_succesful_logins,warning,warning_empty_first_name,no_good_email_address,
              warning_empty_last_name,passwd_dont_match,empty_old_passwd,show_event_history,
-             demo_update_user_disabled,last_update,title_personal_data'}
+             demo_update_user_disabled,last_update,title_personal_data,title_personal_ui,
+             th_execution_type,th_execution_type_text,th_execution_type_icons,th_add_link_bugtracking,
+             th_actions_visibility,th_actions_visibility_visible,th_actions_visibility_hidden,
+             th_execution_columns,execution_type_short_descr,step_exec_notes,exec_result'}
 
 {$action_mgmt="lib/usermanagement/userInfo.php"}
 
@@ -184,46 +187,29 @@ function refreshLastUpdate (last_update)
     <tr>
       <th width="20%">{$labels.th_execution_type}</th>
       <td>
-        <select>
-          <option value="execution_type_text">{$labels.th_execution_type_text}</option>
-          <option value="execution_type_icons}">{$labels.th_execution_type_icons}</option>
-        </select> </td>
-    </tr>
-    <tr>
-      <th>{$labels.th_first_name}</th>
-      <td><input type="text" name="firstName" value="{$user->firstName|escape}"
-                 size="{#NAMES_SIZE#}" maxlength="{#NAMES_MAXLEN#}" />
-                {include file="error_icon.tpl" field="firstName"}
+        <input type="radio" name="execution_type" value="execution_type_icons" checked>{$labels.th_execution_type_icons}<br>
+        <input type="radio" name="execution_type" value="execution_type_text">{$labels.th_execution_type_text}
       </td>
     </tr>
     <tr>
-      <th>{$labels.th_last_name}</th>
-      <td><input type="text" name="lastName" value="{$user->lastName|escape}"
-                 size="{#NAMES_SIZE#}" maxlength="{#NAMES_MAXLEN#}" />
-                 {include file="error_icon.tpl" field="lastName"}
-      </td>
-    </tr>
-    <tr>
-      <th>{$labels.th_email}</th>
-      <td><input type="text" name="emailAddress" value="{$user->emailAddress|escape}"
-                 size="{#EMAIL_SIZE#}" maxlength="{#EMAIL_MAXLEN#}" required />
-                 {include file="error_icon.tpl" field="emailAddress"}
-      </td>
-    </tr>
-    <tr>
-      <th>{$labels.th_locale}</th>
+      <th>{$labels.th_add_link_bugtracking}</th>
       <td>
-        <script type="text/javascript">
-        js_locale = new Array();
-        {foreach key=locale item=value from=$gui->optLocale}
-          js_locale['{$locale}'] = "{lang_get s='last_update' locale=$locale}";
-        {/foreach}
-        </script>
-        
-        <select name="locale" onchange="javascript:refreshLastUpdate(js_locale[this.options[this.selectedIndex].value]);">
-        {html_options options=$gui->optLocale selected=$user->locale}
-        </select>
-        <span id="last_update">{$labels.last_update}</span>
+        <input type="checkbox" name="actions_visibility" />
+      </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_actions_visibility}</th>
+      <td>        
+        <input type="radio" name="actions_visibility" value="actions_visibility_hidden" checked>{$labels.th_actions_visibility_hidden}<br>
+        <input type="radio" name="actions_visibility" value="actions_visibility_visible">{$labels.th_actions_visibility_visible}
+      </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_execution_columns}</th>
+      <td>
+         <input type="checkbox" name="execution_columns" value="execution_type_short_descr" checked>{$labels.execution_type_short_descr}<br>
+         <input type="checkbox" name="execution_columns" value="step_exec_notes" checked>{$labels.step_exec_notes}<br>
+         <input type="checkbox" name="execution_columns" value="exec_result" checked>{$labels.exec_result}
       </td>
     </tr>
   </table>

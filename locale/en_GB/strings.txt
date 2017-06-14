@@ -1391,9 +1391,11 @@ $TLS_th_api = "API Key";
 $TLS_th_execution_type = "Execution type";
 $TLS_th_execution_type_text = "Text dropdown menu";
 $TLS_th_execution_type_icons = "Icons";
-$TLS_th_login = "Login";
-$TLS_th_role = "Role";
-$TLS_th_api = "API Key";
+$TLS_th_add_link_bugtracking = "Add Link in Issue Tracker";
+$TLS_th_actions_visibility = "Actions";
+$TLS_th_actions_visibility_visible = "Visible";
+$TLS_th_actions_visibility_hidden = "Hidden";
+$TLS_th_execution_columns = "Show execution column";
 
 
 //$TLS_api_gen_key_action = "generate";
