@@ -1388,6 +1388,13 @@ $TLS_th_locale = "Locale";
 $TLS_th_login = "Login";
 $TLS_th_role = "Role";
 $TLS_th_api = "API Key";
+$TLS_th_execution_type = "Execution type";
+$TLS_th_execution_type_text = "Text dropdown menu";
+$TLS_th_execution_type_icons = "Icons";
+$TLS_th_login = "Login";
+$TLS_th_role = "Role";
+$TLS_th_api = "API Key";
+
 
 //$TLS_api_gen_key_action = "generate";
 $TLS_warning_delete_user = "You are going to delete: %s <br /><br /> Are you sure?";
@@ -2289,6 +2296,7 @@ $TLS_th_new_passwd_again = "Confirm New Password";
 $TLS_th_old_passwd = "Old Password";
 $TLS_title_account_settings = "Account Settings";
 $TLS_title_personal_data = "Personal data";
+$TLS_title_personal_ui = "User interface";
 $TLS_title_personal_passwd = "Personal password";
 $TLS_title_api_interface = "API interface";
 $TLS_warning_different_pwd = "Please re-enter your new password. Added values were different.";

@@ -177,6 +177,66 @@ function refreshLastUpdate (last_update)
 </form>
 
 <hr />
+<h2>{$labels.title_personal_ui}</h2>
+<form method="post" action="{$action_mgmt}" onsubmit="return validatePersonalData(this)">
+  <input type="hidden" name="doAction" value="editUser" />
+  <table class="common" width="50%">
+    <tr>
+      <th width="20%">{$labels.th_execution_type}</th>
+      <td>
+        <select>
+          <option value="execution_type_text">{$labels.th_execution_type_text}</option>
+          <option value="execution_type_icons}">{$labels.th_execution_type_icons}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_first_name}</th>
+      <td><input type="text" name="firstName" value="{$user->firstName|escape}"
+                 size="{#NAMES_SIZE#}" maxlength="{#NAMES_MAXLEN#}" />
+                {include file="error_icon.tpl" field="firstName"}
+      </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_last_name}</th>
+      <td><input type="text" name="lastName" value="{$user->lastName|escape}"
+                 size="{#NAMES_SIZE#}" maxlength="{#NAMES_MAXLEN#}" />
+                 {include file="error_icon.tpl" field="lastName"}
+      </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_email}</th>
+      <td><input type="text" name="emailAddress" value="{$user->emailAddress|escape}"
+                 size="{#EMAIL_SIZE#}" maxlength="{#EMAIL_MAXLEN#}" required />
+                 {include file="error_icon.tpl" field="emailAddress"}
+      </td>
+    </tr>
+    <tr>
+      <th>{$labels.th_locale}</th>
+      <td>
+        <script type="text/javascript">
+        js_locale = new Array();
+        {foreach key=locale item=value from=$gui->optLocale}
+          js_locale['{$locale}'] = "{lang_get s='last_update' locale=$locale}";
+        {/foreach}
+        </script>
+        
+        <select name="locale" onchange="javascript:refreshLastUpdate(js_locale[this.options[this.selectedIndex].value]);">
+        {html_options options=$gui->optLocale selected=$user->locale}
+        </select>
+        <span id="last_update">{$labels.last_update}</span>
+      </td>
+    </tr>
+  </table>
+  <div class="groupBtn">
+    {if $tlCfg->demoMode}
+      {$labels.demo_update_user_disabled}
+    {else}
+      <input type="submit" value="{$labels.btn_save}" />
+    {/if} 
+  </div>
+</form>
+
+<hr />
 <h2>{lang_get s="title_personal_passwd"}</h2>
 {if $external_password_mgmt eq 0}
   <form name="changePass" method="post" action="{$action_mgmt}"
