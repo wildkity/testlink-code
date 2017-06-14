@@ -158,6 +158,14 @@
                                                            '{$platformID}',
                                                            '{$control->settings.setting_build.selected}','4results',
                                                            '{$control->form_token}');" />
+                                                                       
+            &nbsp;                                               
+            <image src="{$tlImages.export_testplan_results}" title="{$labels.btn_export_testplan_results}"
+                   onclick="javascript: openExportTestPlan('export_testplan','{$session.testprojectID}',
+                                                           '{$control->settings.setting_testplan.selected}',
+                                                           '{$platformID}',
+                                                           '{$control->settings.setting_build.selected}','Results',
+                                                           '{$control->form_token}');" />
 
             &nbsp;                                               
             {/if}

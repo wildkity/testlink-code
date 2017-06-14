@@ -395,6 +395,7 @@ class TLSmarty extends Smarty
                    'execution_order' => $imgLoc . 'timeline_marker.png',
                    'export_excel' => $imgLoc . 'page_excel.png',
                    'export_for_results_import' => $imgLoc . 'brick_go.png',
+                   'export_testplan_results' => $imgLoc . 'bricks.png',
                    'ghost_item' => $imgLoc . 'ghost16x16.png',
                    'user_group' => $imgLoc . 'group.png',
                    'heads_up' => $imgLoc . 'lightbulb.png',
