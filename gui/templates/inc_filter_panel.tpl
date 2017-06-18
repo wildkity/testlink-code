@@ -28,7 +28,8 @@
                         document_id, req_expected_coverage, title,bugs_on_context,
                         status, req_type, req_spec_type, th_tcid, has_relation_type,
                         btn_export_testplan_tree,btn_export_testplan_tree_for_results,
-                        tester_works_with_settings,btn_bulk_remove,btn_bulk_copy'}
+                        tester_works_with_settings,btn_bulk_remove,btn_bulk_cop,
+                        btn_export_testplan_results'}
 
 {config_load file="input_dimensions.conf" section="treeFilterForm"}
 
