@@ -16,6 +16,10 @@
  * '4results'  
  * generates file format that can be used to import results
  * 
+ * 'FullResults'
+ * generates file with current results which can be import in another build 
+ * just change the build name in the exported file
+ * 
  * @filesource  planExport.php
  * @package     TestLink
  * @author      Francisco Mancardi
@@ -56,6 +60,15 @@ if ($args->doExport)
       $content = $tplan_mgr->exportForResultsToXML($args->tplan_id,$context,null,
                                                    array('tcaseSet' => $args->testCaseSet));
       $tLogMsg .= ' : exportForResultsToXML()';
+    break;
+
+    case 'FullResults':
+      $context = array('platform_id' => $args->platform_id, 'build_id' => $args->build_id,
+                       'tproject_id' => $args->tproject_id);
+
+      $content = $tplan_mgr->exportResultsForImportXML($args->tplan_id,$context,null,
+                                                   array('tcaseSet' => $args->testCaseSet));
+      $tLogMsg .= ' : exportResultsForImportXML()';
     break;
 
     case 'linkedItems':
@@ -130,6 +143,7 @@ function init_args()
   {
     case 'tree':
     case '4results':
+    case 'FullResults':
     case 'linkedItems':
     break;
 

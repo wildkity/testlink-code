@@ -6756,6 +6756,11 @@ class testplan extends tlObjectWithAttachments
     }
     
 
+    if( !is_null($my['filters']['current_build_id']) )
+    {
+      $dummy = intval($my['filters']['current_build_id']);
+      $addWhere['current_build'] = 'AND EXEC.build_id =' . $dummy;
+    }
 
     switch($my['options']['detail'])
     {
@@ -6767,7 +6772,16 @@ class testplan extends tlObjectWithAttachments
         $sql = "/* $debugMsg */ " .
                " SELECT {$addField} NH_TCV.parent_id AS tc_id, TPTCV.platform_id, TPTCV.id AS feature_id, " .
                " TCV.tc_external_id AS external_id, {$feid} AS full_external_id, TPTCV.tcversion_id ";
-      break;      
+      break;
+
+      case 'FullResults':
+        $my['options']['output'] = 'array';
+        $sql = "/* $debugMsg */ " .
+                 " SELECT {$addField} NH_TCV.parent_id AS tc_id, TPTCV.platform_id, TPTCV.id AS feature_id, " .
+                 " TCV.tc_external_id AS external_id, {$feid} AS full_external_id, TPTCV.tcversion_id, " .
+                 " USR.login AS tester_name, EXEC.status AS exec_res, EXEC.notes AS exec_notes, " . 
+                 " PLAT.name AS platform_name, EB.bug_id AS bug_id, EXEC.execution_ts AS exec_ts " ;
+      break;         
 
       case 'full':
       default:
@@ -6778,22 +6792,25 @@ class testplan extends tlObjectWithAttachments
                " TPTCV.tcversion_id AS tcversion_id, " .
                " TPTCV.node_order AS execution_order, TPTCV.urgency," .
                " TCV.version AS version, TCV.active, TCV.summary," .
-               " TCV.tc_external_id AS external_id, TCV.execution_type,TCV.importance," .  
-               " {$feid} AS full_external_id, (TPTCV.urgency * TCV.importance) AS priority ";
-      break;      
+               " TCV.tc_external_id AS external_id, TCV.execution_type,TCV.importance," ;  
+               //" {$feid} AS full_external_id, (TPTCV.urgency * TCV.importance) AS priority ";
+      break;    
     }
 
     $sql .=" FROM {$this->tables['nodes_hierarchy']} NH_TCV " .
            " JOIN {$this->tables['nodes_hierarchy']} NH_TCASE ON NH_TCV.parent_id = NH_TCASE.id " .
            " JOIN {$this->tables['testplan_tcversions']} TPTCV ON TPTCV.tcversion_id = NH_TCV.id " .
-           " JOIN  {$this->tables['tcversions']} TCV ON  TCV.id = NH_TCV.id " .
+           " JOIN  {$this->tables['tcversions']} TCV ON TCV.id = NH_TCV.id " .
+           " JOIN  {$this->tables['executions']} EXEC ON EXEC.tcversion_id = NH_TCV.id " .
+           " LEFT OUTER JOIN {$this->tables['execution_bugs']} EB ON EB.execution_id = EXEC.id " .
+           " JOIN  {$this->tables['users']} USR ON  USR.id = EXEC.tester_id " .
            $join['build'] .
            " LEFT OUTER JOIN {$this->tables['platforms']} PLAT ON PLAT.id = TPTCV.platform_id ";
 
     $sql .= " WHERE TPTCV.testplan_id={$safe['tplan']} " . 
-            " {$addWhere['platform']} {$addWhere['tsuite']} {$addWhere['build']}";
+            " {$addWhere['platform']} {$addWhere['tsuite']} {$addWhere['build']} {$addWhere['current_build']}" ;
 
-
+            
     switch($my['options']['output'])
     {
       case 'array':
@@ -7306,6 +7323,121 @@ class testplan extends tlObjectWithAttachments
 
     $xml_mapping = null;
     $xml_mapping = array("{{FULLEXTERNALID}}" => "full_external_id", "||CUSTOMFIELDS||" => "xmlcustomfields",
+                         "||STEPS||" => "xmlsteps");
+                        
+
+    $linked_testcases = exportDataToXML($mm,$xml_root,$xml_template,$xml_mapping,('noXMLHeader'=='noXMLHeader'));
+    $zorba = $xmlString .= $linked_testcases . "\n</results>\n";
+    die;
+    return $zorba;
+  }
+
+/**
+   *
+   */
+  function exportResultsForImportXML($id,$context,$optExport = array(),$filters=null)
+  {
+    $my['filters'] = array('platform_id' => null, 'tcaseSet' => null);
+    $my['filters']['current_build_id'] = isset($context['build_id']) ? $context['build_id'] : null;
+    $my['filters'] = array_merge($my['filters'], (array)$filters);
+
+
+    $item = $this->get_by_id($id,array('output' => 'minimun','caller' => __METHOD__));
+
+    $xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
+                 "<!-- TestLink - www.testlink.org - export results for import -->\n";
+    $xmlString .= "<results>\n";
+    $xmlString .= "\t<testproject name=\"" . htmlspecialchars($item['tproject_name']) . '"' . 
+                  " prefix=\"" . htmlspecialchars($item['prefix']) . '"' . " />\n";
+
+    $xmlString .= "\t<testplan name=\"" . htmlspecialchars($item['name']) . '"' . " />\n";
+
+    if( isset($context['build_id']) &&  $context['build_id'] > 0)
+    {
+      $dummy = $this->get_builds($id);
+      $info = $dummy[$context['build_id']];
+      $xmlString .= "\t<build name=\"" . htmlspecialchars($info['name']) . "\" />\n";
+    }
+
+    // get target platform (if exists)
+    if( $context['platform_id'] > 0)
+    {
+      $info = $this->platform_mgr->getByID($context['platform_id']);
+      $xmlString .= "\t<platform name=\"" . htmlspecialchars($info['name']) . "\" />\n";
+      $my['filters']['platform_id'] = $context['platform_id'];
+    } 
+
+    // <testcase external_id="BB-1" >
+    // <!-- if not present logged user  will be used -->
+    // <!-- tester LOGIN Name -->
+    // <tester>u0113</tester>  
+    // <!-- if not present now() will be used -->
+    // <timestamp>2008-09-08 14:00:00</timestamp>  
+    // <result>p</result>
+    // <notes>functionality works great </notes>
+    // </testcase>
+    $mm = $this->getLinkedStaticView($id,$my['filters'],array('output' => 'array','detail' => 'FullResults'));
+
+    if(!is_null($mm) && ($tcaseQty=count($mm)) > 0)
+    {
+
+      // Custom fields processing
+      $xcf = $this->cfield_mgr->get_linked_cfields_at_execution($item['tproject_id'],1,'testcase');
+      if(!is_null($xcf) && ($cfQty=count($xcf)) > 0)
+      {
+        for($gdx=0; $gdx < $tcaseQty; $gdx++)
+        {
+          $mm[$gdx]['xmlcustomfields'] = $this->cfield_mgr->exportValueAsXML($xcf);
+        }    
+      }  
+
+      // Test Case Steps
+      $gso = array('fields2get' => 'TCSTEPS.id,TCSTEPS.step_number', 'renderGhostSteps' => false, 'renderImageInline' => false);
+      $stepRootElem = "<steps>{{XMLCODE}}</steps>";
+      $stepTemplate = "\n" . '<step>' . "\n" .
+                      "\t<step_number>||STEP_NUMBER||</step_number>\n" .
+                      "\t<result>p</result>\n" .
+                      "\t<notes>||NOTES||</notes>\n" .
+                      "</step>\n";
+      $stepInfo = array("||STEP_NUMBER||" => "step_number", "||NOTES||" => "notes"); 
+   
+      for($gdx=0; $gdx < $tcaseQty; $gdx++)
+      {
+        $mm[$gdx]['steps'] = $this->tcase_mgr->getStepsSimple($mm[$gdx]['tcversion_id'],0,$gso);
+        if(!is_null($mm[$gdx]['steps']))
+        {
+          $qs = count($mm[$gdx]['steps']);
+          for($scx=0; $scx < $qs; $scx++)
+          {
+            $mm[$gdx]['steps'][$scx]['notes'] = 'your step exec notes';
+          }  
+          $mm[$gdx]['xmlsteps'] = exportDataToXML($mm[$gdx]['steps'],$stepRootElem,$stepTemplate,$stepInfo,true);
+        }  
+      }
+    }  
+
+    
+    $xml_root = null;
+    $xml_template = "\n" . 
+                    "\t<testcase external_id=\"{{FULLEXTERNALID}}\">" . "\n" . 
+                    "\t\t" . "<result>{{THISRESULT}}</result>" . "\n" .
+                    "\t\t" . "<notes>{{THISNOTES}}</notes>" . "\n" .
+                    "\t\t" . "<tester>{{THISTESTER}}</tester>" . "\n" .
+                    "\t\t" . "<timestamp>{{THISTIMESTAMP}}</timestamp>" . "\n" .  
+                    "\t\t" . "<bug_id>{{THISTBUGID}}</bug_id>" . "\n" .  
+                    "\t\t" . "||STEPS||" . "\n" .  
+                    "\t\t" . "||CUSTOMFIELDS||" . "\n" .  
+                    "\t</testcase>" . "\n";        
+        
+    
+    $xml_mapping = null;
+    $xml_mapping = array("{{FULLEXTERNALID}}" => "full_external_id",
+                         "{{THISRESULT}}" => "exec_res",
+                         "{{THISNOTES}}" => "exec_notes",
+                         "{{THISTESTER}}" => "tester_name",
+                         "{{THISTIMESTAMP}}" => "exec_ts",
+                         "{{THISTBUGID}}" => "bug_id",
+                         "||CUSTOMFIELDS||" => "xmlcustomfields",
                          "||STEPS||" => "xmlsteps");
 
     $linked_testcases = exportDataToXML($mm,$xml_root,$xml_template,$xml_mapping,('noXMLHeader'=='noXMLHeader'));
