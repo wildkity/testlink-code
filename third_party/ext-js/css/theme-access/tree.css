@@ -8,8 +8,16 @@
 	background-image:url(../images/access/tree/folder-open.gif);
 }
 
-.x-tree-node-leaf .x-tree-node-icon{
-	background-image:url(../images/default/tree/leaf.gif);
+.x-tree-node-leaf-low .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-low.gif);
+}
+
+.x-tree-node-leaf-med .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-med.gif);
+}
+
+.x-tree-node-leaf-high .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-high.gif);
 }
 
 .x-tree-node-collapsed .x-tree-node-icon{

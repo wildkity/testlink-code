@@ -2852,7 +2852,29 @@ a.x-grid3-hd-btn:hover {
     background-repeat: no-repeat;
 }
 
-.x-tree-node-collapsed .x-tree-node-icon, .x-tree-node-expanded .x-tree-node-icon, .x-tree-node-leaf .x-tree-node-icon{
+.x-tree-node-collapsed .x-tree-node-icon, .x-tree-node-expanded .x-tree-node-icon, .x-tree-node-leaf-low .x-tree-node-icon{
+	border: 0 none;
+	height: 18px;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	width: 16px;
+	background-position:center;
+    background-repeat: no-repeat;
+}
+
+.x-tree-node-collapsed .x-tree-node-icon, .x-tree-node-expanded .x-tree-node-icon, .x-tree-node-leaf-med .x-tree-node-icon{
+	border: 0 none;
+	height: 18px;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	width: 16px;
+	background-position:center;
+    background-repeat: no-repeat;
+}
+
+.x-tree-node-collapsed .x-tree-node-icon, .x-tree-node-expanded .x-tree-node-icon, .x-tree-node-leaf-high .x-tree-node-icon{
 	border: 0 none;
 	height: 18px;
 	margin: 0;
@@ -6166,8 +6188,16 @@ td.grid-hd-group-cell {
 	background-image:url(../images/default/tree/folder-open.gif);
 }
 
-.x-tree-node-leaf .x-tree-node-icon{
-	background-image:url(../images/default/tree/leaf.gif);
+.x-tree-node-leaf-low .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-low.gif);
+}
+
+.x-tree-node-leaf-med .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-med.gif);
+}
+
+.x-tree-node-leaf-high .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf-high.gif);
 }
 
 .x-tree-node-collapsed .x-tree-node-icon{
