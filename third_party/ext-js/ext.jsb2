@@ -944,7 +944,7 @@
         "fileIncludes": []
     },{
         "name": "Ext All",
-        "file": "ext-all.js",
+        "file": "ext-all-debug.js",
         "isDebug": true,
         "includeDeps": true,
         "pkgDeps": [

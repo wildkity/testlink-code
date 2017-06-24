@@ -4179,18 +4179,23 @@ class testplan extends tlObjectWithAttachments
       $staticSql[0] = " /* $debugMsg - Get ONLY TestSuites */ " .
                       " SELECT NHTS.node_order AS spec_order," . 
                       " NHTS.node_order AS node_order, NHTS.id, NHTS.parent_id," . 
-                      " NHTS.name, NHTS.node_type_id, 0 AS tcversion_id " .
+                      " NHTS.name, NHTS.node_type_id, 0 AS tcversion_id, " .
+                      " TCV.importance " .
                       " FROM {$this->tables['nodes_hierarchy']} NHTS" .
+                      " LEFT JOIN {$this->tables['testplan_tcversions']} TPTCV ON TPTCV.tcversion_id = NHTS.id " .
+                      " LEFT JOIN {$this->tables['tcversions']} TCV ON TCV.id = TPTCV.tcversion_id " .
                       " WHERE NHTS.node_type_id = {$this->tree_manager->node_descr_id['testsuite']} " .
                       " AND NHTS.parent_id = ";
                
       $staticSql[1] =  " /* $debugMsg - Get ONLY Test Cases with version linked to (testplan,platform) */ " .
                        " SELECT NHTC.node_order AS spec_order, " .
                        "        TPTCV.node_order AS node_order, NHTC.id, NHTC.parent_id, " .
-                       "        NHTC.name, NHTC.node_type_id, TPTCV.tcversion_id " .
+                       "        NHTC.name, NHTC.node_type_id, TPTCV.tcversion_id, " .
+                       "        TCV.importance " .
                        " FROM {$this->tables['nodes_hierarchy']} NHTC " .
                        " JOIN {$this->tables['nodes_hierarchy']} NHTCV ON NHTCV.parent_id = NHTC.id " .
                        " JOIN {$this->tables['testplan_tcversions']} TPTCV ON TPTCV.tcversion_id = NHTCV.id " .
+                       " LEFT JOIN {$this->tables['tcversions']} TCV ON TCV.id = TPTCV.tcversion_id " .
                        " WHERE NHTC.node_type_id = {$this->tree_manager->node_descr_id['testcase']} " .
                        " AND TPTCV.testplan_id = " . intval($tplan_id) . " {$platformFilter} " .
                        " AND NHTC.parent_id = ";  

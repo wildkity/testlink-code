@@ -57,7 +57,7 @@ Purpose: include files for:
   
   {if $css_only == 0}
       <script type="text/javascript" src="{$basehref}{$ext_location}/adapter/ext/ext-base.js" language="javascript"></script>
-      <script type="text/javascript" src="{$basehref}{$ext_location}/ext-all.js" language="javascript"></script>
+      <script type="text/javascript" src="{$basehref}{$ext_location}/ext-all-debug.js" language="javascript"></script>
       
       <script type="text/javascript" src="{$basehref}{$ext_location}/ux/Reorderer.js" language="javascript"></script>
       <script type="text/javascript" src="{$basehref}{$ext_location}/ux/ToolbarReorderer.js" language="javascript"></script>

@@ -952,6 +952,10 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 	background-image:url(../images/access/tree/folder-open.gif);
 }
 
+.x-tree-node-leaf .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf.gif);
+}
+
 .x-tree-node-leaf-low .x-tree-node-icon{
 	background-image:url(../images/default/tree/leaf-low.gif);
 }

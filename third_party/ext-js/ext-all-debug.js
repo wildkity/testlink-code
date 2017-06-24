@@ -36184,13 +36184,14 @@ Ext.tree.TreeNodeUI = Ext.extend(Object, {
 
     
     renderElements : function(n, a, targetNode, bulkRender){
-        
-        this.indentMarkup = n.parentNode ? n.parentNode.ui.getChildIndent() : '';
 
+        this.indentMarkup = n.parentNode ? n.parentNode.ui.getChildIndent() : '';
+        
         var cb = Ext.isBoolean(a.checked),
             nel,
             href = this.getHref(a.href),
-            buf = ['<li class="x-tree-node"><div ext:tree-node-id="',n.id,'" class="x-tree-node-el x-tree-node-leaf x-unselectable ', a.cls,'" unselectable="on">',
+            importance = a.importance==3 ? " x-tree-node-leaf-high" : (a.importance==2 ? " x-tree-node-leaf-med": (a.importance==1 ? " x-tree-node-leaf-low": " x-tree-node-leaf")),
+            buf = ['<li class="x-tree-node"><div ext:tree-node-id="',n.id,'" class="x-tree-node-el ',importance,' x-unselectable ', a.cls,'" unselectable="on">',
             '<span class="x-tree-node-indent">',this.indentMarkup,"</span>",
             '<img alt="" src="', this.emptyIcon, '" class="x-tree-ec-icon x-tree-elbow" />',
             '<img alt="" src="', a.icon || this.emptyIcon, '" class="x-tree-node-icon',(a.icon ? " x-tree-node-inline-icon" : ""),(a.iconCls ? " "+a.iconCls : ""),'" unselectable="on" />',
@@ -36268,6 +36269,9 @@ Ext.tree.TreeNodeUI = Ext.extend(Object, {
                 }
                 if(this.wasLeaf){
                     this.removeClass("x-tree-node-leaf");
+                    this.removeClass("x-tree-node-leaf-low");
+                    this.removeClass("x-tree-node-leaf-med");
+                    this.removeClass("x-tree-node-leaf-high");
                     this.wasLeaf = false;
                 }
                 if(this.c1 != c1 || this.c2 != c2){

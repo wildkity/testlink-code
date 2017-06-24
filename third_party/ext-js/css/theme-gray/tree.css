@@ -8,6 +8,10 @@
 	background-image:url(../images/default/tree/folder-open.gif);
 }
 
+.x-tree-node-leaf .x-tree-node-icon{
+	background-image:url(../images/default/tree/leaf.gif);
+}
+
 .x-tree-node-leaf-low .x-tree-node-icon{
 	background-image:url(../images/default/tree/leaf-low.gif);
 }
