@@ -7333,7 +7333,8 @@ class testplan extends tlObjectWithAttachments
   }
 
 /**
-   *
+   * Export results from the curent build for import in another - just rename the build in the file with the new one
+   * Does not work for Steps and Custom Fields
    */
   function exportResultsForImportXML($id,$context,$optExport = array(),$filters=null)
   {
@@ -7378,44 +7379,6 @@ class testplan extends tlObjectWithAttachments
     // </testcase>
     $mm = $this->getLinkedStaticView($id,$my['filters'],array('output' => 'array','detail' => 'FullResults'));
 
-    if(!is_null($mm) && ($tcaseQty=count($mm)) > 0)
-    {
-
-      // Custom fields processing
-      $xcf = $this->cfield_mgr->get_linked_cfields_at_execution($item['tproject_id'],1,'testcase');
-      if(!is_null($xcf) && ($cfQty=count($xcf)) > 0)
-      {
-        for($gdx=0; $gdx < $tcaseQty; $gdx++)
-        {
-          $mm[$gdx]['xmlcustomfields'] = $this->cfield_mgr->exportValueAsXML($xcf);
-        }    
-      }  
-
-      // Test Case Steps
-      $gso = array('fields2get' => 'TCSTEPS.id,TCSTEPS.step_number', 'renderGhostSteps' => false, 'renderImageInline' => false);
-      $stepRootElem = "<steps>{{XMLCODE}}</steps>";
-      $stepTemplate = "\n" . '<step>' . "\n" .
-                      "\t<step_number>||STEP_NUMBER||</step_number>\n" .
-                      "\t<result>p</result>\n" .
-                      "\t<notes>||NOTES||</notes>\n" .
-                      "</step>\n";
-      $stepInfo = array("||STEP_NUMBER||" => "step_number", "||NOTES||" => "notes"); 
-   
-      for($gdx=0; $gdx < $tcaseQty; $gdx++)
-      {
-        $mm[$gdx]['steps'] = $this->tcase_mgr->getStepsSimple($mm[$gdx]['tcversion_id'],0,$gso);
-        if(!is_null($mm[$gdx]['steps']))
-        {
-          $qs = count($mm[$gdx]['steps']);
-          for($scx=0; $scx < $qs; $scx++)
-          {
-            $mm[$gdx]['steps'][$scx]['notes'] = 'your step exec notes';
-          }  
-          $mm[$gdx]['xmlsteps'] = exportDataToXML($mm[$gdx]['steps'],$stepRootElem,$stepTemplate,$stepInfo,true);
-        }  
-      }
-    }  
-
     
     $xml_root = null;
     $xml_template = "\n" . 
@@ -7425,8 +7388,6 @@ class testplan extends tlObjectWithAttachments
                     "\t\t" . "<tester>{{THISTESTER}}</tester>" . "\n" .
                     "\t\t" . "<timestamp>{{THISTIMESTAMP}}</timestamp>" . "\n" .  
                     "\t\t" . "<bug_id>{{THISTBUGID}}</bug_id>" . "\n" .  
-                    "\t\t" . "||STEPS||" . "\n" .  
-                    "\t\t" . "||CUSTOMFIELDS||" . "\n" .  
                     "\t</testcase>" . "\n";        
         
     
@@ -7436,9 +7397,7 @@ class testplan extends tlObjectWithAttachments
                          "{{THISNOTES}}" => "exec_notes",
                          "{{THISTESTER}}" => "tester_name",
                          "{{THISTIMESTAMP}}" => "exec_ts",
-                         "{{THISTBUGID}}" => "bug_id",
-                         "||CUSTOMFIELDS||" => "xmlcustomfields",
-                         "||STEPS||" => "xmlsteps");
+                         "{{THISTBUGID}}" => "bug_id");
 
     $linked_testcases = exportDataToXML($mm,$xml_root,$xml_template,$xml_mapping,('noXMLHeader'=='noXMLHeader'));
     $zorba = $xmlString .= $linked_testcases . "\n</results>\n";
